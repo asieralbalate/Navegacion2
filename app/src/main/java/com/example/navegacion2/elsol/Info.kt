@@ -66,7 +66,60 @@ fun Info(navController: NavHostController, snackbarHostState: SnackbarHostState)
     },
         bottomBar = {
             MyNavigationBar(navController = navController)
-        }
+        },
+        topBar = {BottomAppBar(
+            containerColor = Color.Red,
+            contentColor = Color.White,
+            modifier = Modifier
+                .fillMaxWidth()
+                .zIndex(1f)
+        )
+        {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 5.dp)
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(
+                        onClick = {
+                            scope.launch { drawerState.open() }
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = null,
+                            tint = Color.White
+                        )
+                    }
+                    BadgedBox(badge = {
+                        Badge {
+                            Text(text = badgeCount.toString())
+                        }
+
+                    }, modifier = Modifier
+                        .padding(10.dp)
+                        .clickable { badgeCount++ }) {
+                        Icon(
+                            imageVector = Icons.Default.Favorite,
+                            contentDescription = null,
+                            tint = Color.White
+                        )
+                    }
+                }
+                Row {
+                    FloatingActionButton(onClick = { /*TODO*/ }, containerColor = Pink40) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = null,
+                            tint = Color.Black
+                        )
+                    }
+                }
+            }
+        }}
     )
     {
         val items = listOf(Icons.Default.Build, Icons.Default.Info, Icons.Default.Email)
@@ -101,7 +154,7 @@ fun Info(navController: NavHostController, snackbarHostState: SnackbarHostState)
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(bottom = it.calculateBottomPadding())
+                        .padding(bottom = it.calculateBottomPadding(), top = it.calculateTopPadding())
                 ) {
 
                 }

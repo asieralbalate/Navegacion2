@@ -67,7 +67,7 @@ import com.example.navegacion2.ui.theme.Pink40
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "SuspiciousIndentation")
 @Composable
 fun PortadaElSol(navController: NavHostController, snackbarHostState: SnackbarHostState) {
     var badgeCount by remember { mutableStateOf(0) }
@@ -84,6 +84,60 @@ fun PortadaElSol(navController: NavHostController, snackbarHostState: SnackbarHo
                     navController
                 )
 
+        } , topBar = {
+            BottomAppBar(
+                containerColor = Color.Red,
+                contentColor = Color.White,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .zIndex(1f)
+            )
+            {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(end = 5.dp)
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        IconButton(
+                            onClick = {
+                                scope.launch { drawerState.open() }
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = null,
+                                tint = Color.White
+                            )
+                        }
+                        BadgedBox(badge = {
+                            Badge {
+                                Text(text = badgeCount.toString())
+                            }
+
+                        }, modifier = Modifier
+                            .padding(10.dp)
+                            .clickable { badgeCount++ }) {
+                            Icon(
+                                imageVector = Icons.Default.Favorite,
+                                contentDescription = null,
+                                tint = Color.White
+                            )
+                        }
+                    }
+                    Row {
+                        FloatingActionButton(onClick = { /*TODO*/ }, containerColor = Pink40) {
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = null,
+                                tint = Color.Black
+                            )
+                        }
+                    }
+                }
+            }
         }
     )
     {
@@ -93,7 +147,7 @@ fun PortadaElSol(navController: NavHostController, snackbarHostState: SnackbarHo
         }
         ModalNavigationDrawer(drawerState = drawerState,
             drawerContent = {
-                ModalDrawerSheet {
+                ModalDrawerSheet (Modifier.padding(top = it.calculateTopPadding(), bottom = it.calculateBottomPadding())){
                     Image(
                         painter = painterResource(id = R.drawable.corona_solar),
                         contentDescription = "Image",
@@ -119,7 +173,7 @@ fun PortadaElSol(navController: NavHostController, snackbarHostState: SnackbarHo
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(bottom = it.calculateBottomPadding())
+                        .padding(bottom = it.calculateBottomPadding(), top = it.calculateTopPadding())
                 ) {
                     val cardDataList = getCardData()
                         LazyVerticalGrid(columns = GridCells.Fixed(2),

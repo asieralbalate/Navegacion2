@@ -40,6 +40,7 @@ class MainActivity : ComponentActivity() {
                         composable("PortadaElSol") { PortadaElSol(navController, snackbarHostState = SnackbarHostState()) }
                         composable("Filled.Email") { Email(navController, snackbarHostState =  SnackbarHostState()) }
                         composable("Filled.Info") { Info(navController, snackbarHostState =  SnackbarHostState()) }
+                        composable("Filled.Build") { PortadaElSol(navController, snackbarHostState =  SnackbarHostState()) }
                         composable("PortadaCoffee") { PortadaCoffee(navController) }
                         composable(
                             route = "Comentarios/{cafeteriaName}",

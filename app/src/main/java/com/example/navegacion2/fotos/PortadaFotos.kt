@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -42,87 +43,74 @@ fun PortadaFotos(navController: NavHostController) {
     val configuration = LocalConfiguration.current
     when (configuration.orientation) {
         Configuration.ORIENTATION_LANDSCAPE -> {
-
-            Scaffold (bottomBar = {
-                MyNavigationBar(
-                    navController
-                )
-            },modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 8.dp))
-            {
-                LazyRow(
-                    modifier = Modifier
-                        .height(130.dp)
-                        .fillMaxWidth()
-                ) {
-                    items(getAboutData()) { about ->
-                        ItemAbout(imageData = about) {
-                            selectedImage = about
+            Scaffold(
+                bottomBar = { MyNavigationBar(navController) },
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 8.dp),
+                content = {
+                    LazyRow(
+                        modifier = Modifier
+                            .height(130.dp)
+                            .fillMaxWidth()
+                    ) {
+                        items(getAboutData()) { about ->
+                            ItemAbout(imageData = about) {
+                                selectedImage = about
+                            }
                         }
 
                     }
-                }
-                Spacer(modifier = Modifier.height(30.dp))
+                    selectedImage?.let { imageData ->
+                        ImageDetail(
+                            imageData = imageData
 
-                if (selectedImage != null) {
-                    Surface {
-                        Image(
-                            painter = painterResource(id = selectedImage!!.photo),
-                            contentDescription = "Game Image",
-                            modifier = Modifier
-                                .fillMaxSize()
                         )
                     }
-                } else  {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = Color.Transparent,
-                    ) { }
-                }
-            }
+                })
         }
+
         else -> {
-            Scaffold (bottomBar = { MyNavigationBar(
-                navController
-            )},modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 8.dp))
-            {
-                LazyRow(
-                    modifier = Modifier
-                        .height(130.dp)
-                        .fillMaxWidth()
-                ) {
-                    items(getAboutData()) { about ->
-                        ItemAbout(imageData = about) {
-                            selectedImage = about
+            Scaffold(
+                bottomBar = { MyNavigationBar(navController) },
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 8.dp),
+                content = {
+                    LazyRow(
+                        modifier = Modifier
+                            .height(130.dp)
+                            .fillMaxWidth()
+                    ) {
+                        items(getAboutData()) { about ->
+                            ItemAbout(imageData = about) {
+                                selectedImage = about
+                            }
                         }
 
                     }
-                }
-                Spacer(modifier = Modifier.height(30.dp))
-                if (selectedImage != null) {
-                    Surface {
-                        Image(
-                            painter = painterResource(id = selectedImage!!.photo),
-                            contentDescription = "Game Image",
-                            modifier = Modifier
-                                .fillMaxSize()
-                        )
+                    selectedImage?.let { imageData ->
+                        ImageDetail(
+                            imageData = imageData
+                            )
                     }
-                } else  {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = Color.Transparent,
-                    ) { }
-                }
-            }
+                })
         }
     }
 
 }
 
+@Composable
+fun ImageDetail(imageData: ImageData) {
+    Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                Image(
+                    painter = painterResource(id = imageData.photo),
+                    contentDescription = "Game Image",
+                    modifier = Modifier
+                        .fillMaxSize()
+                )
+    }
+}
 
 data class ImageData(
     @DrawableRes var photo: Int
@@ -164,8 +152,7 @@ fun ItemAbout(imageData: ImageData, onClick: () -> Unit) {
             .fillMaxHeight()
             .width(180.dp)
             .padding(end = 5.dp)
-            .clickable(onClick = onClick)
-        ,
+            .clickable ( onClick = onClick),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

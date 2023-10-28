@@ -186,7 +186,7 @@ fun Comentarios(navControllerName: String, navController: NavHostController){
             }
 
         }
-        Box(modifier = Modifier.fillMaxSize(),
+        Box(modifier = Modifier.fillMaxSize().padding(bottom = it.calculateBottomPadding()),
             contentAlignment = Alignment.BottomCenter) {
             if (!buttonVisible.value) {
                 Button(
