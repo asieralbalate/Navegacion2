@@ -29,8 +29,6 @@ import androidx.navigation.NavHostController
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Portada(navController: NavHostController) {
-
-
     Scaffold(bottomBar = {
         MyNavigationBar(navController)
     }) {
@@ -67,17 +65,17 @@ fun MyNavigationBar(
                     when (item) {
                         "MyPhotos" -> Icon(
                             imageVector = Icons.Filled.AccountBox,
-                            contentDescription = null
+                            contentDescription = item
                         )
 
                         "CoffeeShops" -> Icon(
                             imageVector = Icons.Filled.Favorite,
-                            contentDescription = null
+                            contentDescription = item
                         )
 
                         "ElSol" -> Icon(
                             imageVector = Icons.Filled.Face,
-                            contentDescription = null
+                            contentDescription = item
                         )
                     }
                 })
