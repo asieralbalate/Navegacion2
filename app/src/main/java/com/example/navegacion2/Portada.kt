@@ -46,7 +46,7 @@ fun Portada(navController: NavHostController) {
 fun MyNavigationBar(
     navController: NavHostController
 ) {
-    var selectedItem  by remember { mutableStateOf(0) }
+    var selectedItem  by remember { mutableStateOf(3) }
     val items = listOf("MyPhotos", "CoffeeShops", "ElSol")
 
     NavigationBar(modifier = Modifier.height(80.dp)) {
